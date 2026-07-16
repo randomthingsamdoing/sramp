@@ -2,19 +2,23 @@ import { useEffect } from "react";
 
 import { MediaLibrary } from "@/features/media/library";
 import { Preview, PreviewEmpty } from "@/features/preview/Preview";
+import { Timeline } from "@/features/timeline/Timeline";
+import { DragGhost } from "@/features/media/DragGhost";
 import { useMediaStore } from "@/features/media/store";
+import { useTimelineStore } from "@/features/timeline/store";
 
 export default function App() {
-  const init = useMediaStore((s) => s.init);
-  const clips = useMediaStore((s) => s.clips);
-  const selectedClipId = useMediaStore((s) => s.selectedClipId);
-  const selected = selectedClipId
-    ? (clips.find((c) => c.id === selectedClipId) ?? null)
-    : null;
+  const initMedia = useMediaStore((s) => s.init);
+  const initTimeline = useTimelineStore((s) => s.init);
 
   useEffect(() => {
-    void init();
-  }, [init]);
+    void initMedia();
+    void initTimeline();
+  }, [initMedia, initTimeline]);
+
+  const hasActiveClip = useTimelineStore(
+    (s) => s.getActiveTimelineClip() != null,
+  );
 
   return (
     <main className="flex h-screen w-screen flex-col overflow-hidden bg-background text-foreground">
@@ -30,14 +34,12 @@ export default function App() {
         <MediaLibrary />
         <div className="flex flex-1 flex-col overflow-hidden">
           <section className="flex flex-1 items-center justify-center overflow-hidden bg-background">
-            {selected ? <Preview clip={selected} /> : <PreviewEmpty />}
+            {hasActiveClip ? <Preview /> : <PreviewEmpty />}
           </section>
-          <section
-            className="h-32 shrink-0 border-t border-border bg-surface"
-            aria-label="timeline-placeholder"
-          />
+          <Timeline />
         </div>
       </div>
+      <DragGhost />
     </main>
   );
 }

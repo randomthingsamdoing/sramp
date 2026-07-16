@@ -45,3 +45,34 @@ export interface MediaClip {
   thumb_path: string | null;
   proxy: ProxyInfo;
 }
+
+/** Week 3 — timeline project model.
+ *  Mirrors `apps/desktop/src-tauri/src/timeline/mod.rs`. */
+
+export type TrackKind = "video" | "audio" | "music";
+
+export interface TimelineClip {
+  id: string;
+  /** FK into the MediaClip library. */
+  media_id: string;
+  /** Position on the track timeline (seconds). */
+  position_sec: number;
+  /** Source-side trim in-point (seconds into the source file). */
+  in_sec: number;
+  /** Source-side trim out-point. Always > in_sec. */
+  out_sec: number;
+}
+
+export interface Track {
+  id: string;
+  kind: TrackKind;
+  clips: TimelineClip[];
+}
+
+export interface Project {
+  tracks: Track[];
+  /** Playhead position in seconds. */
+  playhead_sec: number;
+  /** Pixels per second on the timeline. Fixed for week 3a. */
+  zoom: number;
+}

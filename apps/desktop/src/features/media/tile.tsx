@@ -1,6 +1,7 @@
 import { FilmIcon, MusicIcon } from "lucide-react";
 import { convertFileSrc } from "@tauri-apps/api/core";
 
+import { useTimelineStore } from "@/features/timeline/store";
 import { cn } from "@/lib/utils";
 import type { MediaClip, ProxyStatus } from "@/lib/types";
 
@@ -34,10 +35,22 @@ export function MediaTile({ clip, selected, onSelect }: Props) {
     <button
       type="button"
       onClick={onSelect}
+      onMouseDown={() => {
+        // Mark the clip as in-flight for the drop. We don't use HTML5
+        // drag-and-drop (draggable=true) because WKWebView puts the WebView
+        // into AppKit drag-mode the moment HTML5 drag starts, intercepting
+        // `pointerup` and `drop` so they never reach the WebView.
+        // Pure mouse events fire reliably.
+        useTimelineStore.getState().setDragging({
+          mediaId: clip.id,
+          mediaName: clip.name,
+        });
+      }}
       aria-pressed={selected}
       className={cn(
         "group overflow-hidden rounded-md border bg-surface-elevated text-left",
-        "transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
+        "cursor-grab transition-colors active:cursor-grabbing",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent",
         selected ? "border-accent" : "border-border hover:border-border-muted",
       )}
     >

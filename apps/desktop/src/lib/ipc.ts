@@ -7,7 +7,7 @@
 
 import { invoke } from "@tauri-apps/api/core";
 
-import type { MediaClip } from "./types";
+import type { MediaClip, Project, TimelineClip } from "./types";
 
 export async function importClip(sourcePath: string): Promise<MediaClip> {
   return invoke<MediaClip>("import_clip", { sourcePath });
@@ -27,4 +27,33 @@ export async function getClip(id: string): Promise<MediaClip | null> {
 
 export async function removeClip(id: string): Promise<void> {
   await invoke("remove_clip", { id });
+}
+
+// ── Timeline (week 3) ─────────────────────────────────────────────
+
+export async function getProject(): Promise<Project> {
+  return invoke<Project>("get_project");
+}
+
+export async function addClipToTrack(
+  trackId: string,
+  mediaId: string,
+  positionSec: number,
+): Promise<TimelineClip> {
+  return invoke<TimelineClip>("add_clip_to_track", {
+    trackId,
+    mediaId,
+    positionSec,
+  });
+}
+
+export async function removeClipFromTrack(
+  trackId: string,
+  clipId: string,
+): Promise<void> {
+  await invoke("remove_clip_from_track", { trackId, clipId });
+}
+
+export async function setPlayhead(sec: number): Promise<void> {
+  await invoke("set_playhead", { sec });
 }

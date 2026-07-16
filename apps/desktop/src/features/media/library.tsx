@@ -4,6 +4,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { Button } from "@/components/ui/button";
 import { importClip, importFolder } from "@/lib/ipc";
 import { useMediaStore } from "./store";
+import { useTimelineStore } from "@/features/timeline/store";
 import { MediaTile } from "./tile";
 
 const VIDEO_FILTERS = [
@@ -81,7 +82,19 @@ export function MediaLibrary() {
                 key={c.id}
                 clip={c}
                 selected={selectedClipId === c.id}
-                onSelect={() => setSelected(c.id === selectedClipId ? null : c.id)}
+                onSelect={() => {
+                  const wasSelected = selectedClipId === c.id;
+                  setSelected(wasSelected ? null : c.id);
+                  // If this clip is already on the timeline, jump the
+                  // playhead to its position so the preview updates.
+                  const tl = useTimelineStore
+                    .getState()
+                    .project.tracks.flatMap((t) => t.clips)
+                    .find((c) => c.media_id === c.id);
+                  if (tl && !wasSelected) {
+                    useTimelineStore.getState().setPlayhead(tl.position_sec);
+                  }
+                }}
               />
             ))
           )}
