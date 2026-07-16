@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Sramp design system.
+ * Locked by Decisions (§0.1.7): warm-amber accent.
+ * Glass/aurora macOS aesthetic (§9): dark base + translucent surfaces.
+ * Surfaces are 1-step apart on the L axis.
+ */
+@theme {
+  /* Surfaces (oklch L stops) */
+  --color-background: oklch(0.18 0 0);
+  --color-surface: oklch(0.22 0 0);
+  --color-surface-elevated: oklch(0.27 0 0);
+
+  /* Text */
+  --color-foreground: oklch(0.95 0 0);
+  --color-foreground-muted: oklch(0.65 0 0);
+
+  /* Strokes */
+  --color-border: oklch(0.30 0 0);
+  --color-border-muted: oklch(0.24 0 0);
+
+  /* Accent — warm amber, locked */
+  --color-accent: oklch(0.78 0.13 60);
+  --color-accent-foreground: oklch(0.15 0 0);
+
+  /* Type */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+  }
+}

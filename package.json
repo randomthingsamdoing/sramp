@@ -1,0 +1,19 @@
+{
+  "name": "sramp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Speed-ramp video editor for car content. Tauri + React.",
+  "type": "module",
+  "scripts": {
+    "dev": "sh scripts/with-clean-target.sh pnpm --filter @sramp/desktop tauri dev",
+    "build": "sh scripts/with-clean-target.sh pnpm --filter @sramp/desktop tauri build",
+    "build:web": "pnpm --filter @sramp/desktop build",
+    "typecheck": "pnpm -r --parallel typecheck",
+    "lint": "pnpm -r --parallel lint",
+    "test": "pnpm -r --parallel test"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

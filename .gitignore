@@ -1,0 +1,74 @@
+node_modules/
+dist/
+build/
+out/
+coverage/
+.vite/
+.cache/
+.turbo/
+.nx/
+.pnpm-store/
+
+# Tauri / Rust
+**/target/
+**/src-tauri/gen/
+*.dSYM/
+
+# Editor
+.vscode/
+.idea/
+.history/
+.fleet/
+*.swp
+*.swo
+*.swn
+*.code-workspace
+
+# OS
+.DS_Store
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Env
+.env
+.env.*
+.envrc
+
+# Logs
+*.log
+*.log.*
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local data and credentials
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+secrets/
+credentials/
+tmp/
+temp/
+
+# Build output
+*.tsbuildinfo
+
+# Private project planning
+PLAN.md
