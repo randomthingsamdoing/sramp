@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FilmIcon, MusicIcon } from "lucide-react";
 import { convertFileSrc } from "@tauri-apps/api/core";
 
@@ -30,21 +29,6 @@ interface Props {
 export function MediaTile({ clip, selected, onSelect }: Props) {
   const hasVideo = (clip.probe?.width ?? 0) > 0 && (clip.probe?.height ?? 0) > 0;
   const proxyLabel = PROXY_LABEL[clip.proxy.status];
-
-  // Diagnostic: log every render state so we can see what React thinks
-  // the clip looks like vs. what events fired.
-  useEffect(() => {
-    console.log(
-      "[tile] render",
-      clip.id.slice(0, 8),
-      "thumb=",
-      clip.thumb_path ? "set" : "NULL",
-      "proxy=",
-      clip.proxy.status,
-      "hasVideo=",
-      hasVideo,
-    );
-  }, [clip.id, clip.thumb_path, clip.proxy.status, hasVideo]);
 
   return (
     <button

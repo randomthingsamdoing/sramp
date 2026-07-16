@@ -30,7 +30,12 @@
       "assetProtocol": {
         "enable": true,
         "scope": [
-          "**"
+          "$APPCACHE/**",
+          "$APPCACHE",
+          "$APPDATA/**",
+          "$HOME/**",
+          "/Volumes/**",
+          "/Users/**"
         ]
       }
     }

@@ -88,7 +88,6 @@ export const useMediaStore = create<MediaState>((set, get) => ({
     unlistenThumb = await listen<{ id: string; thumb_path: string }>(
       "clip:thumb_ready",
       (event) => {
-        console.log("[clip:thumb_ready]", event.payload);
         const { id, thumb_path } = event.payload;
         const state = get();
         if (clipExists(state.clips, id)) {
@@ -112,7 +111,6 @@ export const useMediaStore = create<MediaState>((set, get) => ({
       path: string | null;
       error: string | null;
     }>("clip:proxy_state", (event) => {
-      console.log("[clip:proxy_state]", event.payload);
       const { id, status, path, error } = event.payload;
       const newProxy: ProxyInfo = { status, path, error };
       const state = get();
